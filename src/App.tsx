@@ -15,6 +15,8 @@ function App() {
 
     const visitPortfolio = () => {
         console.log('visiting portfolio...');
+        const portfolioPath:string = "https://rayray39.vercel.app";
+        window.open(portfolioPath, '_blank');
     }
 
     return <>
