@@ -4,6 +4,19 @@ import Paper from "@mui/material/Paper"
 import Stack from "@mui/material/Stack"
 
 function App() {
+
+    const addNeWPost = () => {
+        console.log('adding new post...');
+    }
+
+    const goToMainPage = () => {
+        console.log('going to main page...');
+    }
+
+    const visitPortfolio = () => {
+        console.log('visiting portfolio...');
+    }
+
     return <>
         <Stack sx={{
             maxWidth:'50%',
@@ -19,19 +32,19 @@ function App() {
                 }}>
                     <Button variant="contained" disableElevation sx={{
                         bgcolor:'mediumseagreen'
-                    }}>+New Post</Button>
+                    }} onClick={addNeWPost}>+New Post</Button>
                     <Button sx={{
                         color:'black',
                         '&:hover':{
                             bgcolor:'lightgrey',
                         }
-                    }}>FeelEmo</Button>
+                    }} onClick={goToMainPage}>💭 FeelEmo 😌</Button>
                     <Button sx={{
                         color:'black',
                         '&:hover':{
                             bgcolor:'lightgrey',
                         }
-                    }}>By rayray</Button>
+                    }} onClick={visitPortfolio}>By rayray</Button>
                 </Stack>
             </Paper>
 
