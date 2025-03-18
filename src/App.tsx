@@ -1,4 +1,5 @@
 import Box from "@mui/material/Box"
+import Button from "@mui/material/Button"
 import Paper from "@mui/material/Paper"
 import Stack from "@mui/material/Stack"
 
@@ -9,8 +10,29 @@ function App() {
             transform:'translateX(50%)',
             marginTop:'20px'
         }}>
-            <Paper elevation={3}>
-                This is some content
+            <Paper elevation={3} sx={{
+                padding:'10px'
+            }}>
+                <Stack direction={'row'} sx={{
+                    display:'flex',
+                    justifyContent:'space-between'
+                }}>
+                    <Button variant="contained" disableElevation sx={{
+                        bgcolor:'mediumseagreen'
+                    }}>+New Post</Button>
+                    <Button sx={{
+                        color:'black',
+                        '&:hover':{
+                            bgcolor:'lightgrey',
+                        }
+                    }}>FeelEmo</Button>
+                    <Button sx={{
+                        color:'black',
+                        '&:hover':{
+                            bgcolor:'lightgrey',
+                        }
+                    }}>By rayray</Button>
+                </Stack>
             </Paper>
 
             <Box sx={{
