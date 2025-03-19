@@ -3,6 +3,7 @@ import Button from "@mui/material/Button"
 import Modal from "@mui/material/Modal"
 import Paper from "@mui/material/Paper"
 import Stack from "@mui/material/Stack"
+import TextField from "@mui/material/TextField"
 import Typography from "@mui/material/Typography"
 import { useState } from "react"
 
@@ -58,12 +59,21 @@ function Toolbar() {
                         aria-describedby="modal-modal-description"
                     >
                         <Box sx={modalBoxStyle}>
-                        <Typography id="modal-modal-title" variant="h6" component="h2">
-                            Text in a modal
+                        <Typography id="modal-modal-title" variant="h6" component="h2" sx={{fontWeight:'bold'}}>
+                            How are you feeling today...
                         </Typography>
-                        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-                        </Typography>
+                        <TextField
+                            id="outlined-multiline-static"
+                            label="Express your thoughts here"
+                            multiline
+                            rows={4}
+                            fullWidth
+                            sx={{
+                                marginTop: '20px',
+                                marginBottom: '20px'
+                            }}
+                        />
+                        <Button sx={{bgcolor:'mediumseagreen'}} disableElevation variant="contained">Add</Button>
                         </Box>
                     </Modal>
 
