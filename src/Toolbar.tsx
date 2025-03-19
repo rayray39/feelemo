@@ -33,6 +33,8 @@ function Toolbar() {
         // when the 'ADD' button inside the modal is clicked on
         console.log('adding new post...');
         console.log(`new post content: ${newPostContent}`);
+        setNewPostContent('');
+        setOpenNewPostModal(false);
     }
 
     const goToMainPage = () => {
