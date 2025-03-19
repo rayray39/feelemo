@@ -70,7 +70,14 @@ function Toolbar() {
                             fullWidth
                             sx={{
                                 marginTop: '20px',
-                                marginBottom: '20px'
+                                marginBottom: '20px',
+                                bgcolor:'#ECEBEB',
+                                '& .MuiOutlinedInput-notchedOutline':{
+                                    border:'none'
+                                },
+                                '& label.Mui-focused': {
+                                    color: 'black',
+                                },
                             }}
                         />
                         <Button sx={{bgcolor:'mediumseagreen'}} disableElevation variant="contained">Add</Button>
