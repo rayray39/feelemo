@@ -9,6 +9,7 @@ import { useState } from "react"
 
 function Toolbar() {
     const [openNewPostModal, setOpenNewPostModal] = useState<boolean>(false);
+    const [newPostContent, setNewPostContent] = useState<string>('');
     
     const modalBoxStyle = {
         position: 'absolute',
@@ -20,11 +21,18 @@ function Toolbar() {
         boxShadow: 24,
         p: 4,
         borderRadius:4
-        };
+    };
 
-    const addNeWPost = () => {
-        console.log('adding new post...');
+    const openNewPost = () => {
+        // when '+ New Post' button on the toolbar is clicked on
+        console.log('opening new post...');
         setOpenNewPostModal(true);
+    }
+
+    const addNewPost = () => {
+        // when the 'ADD' button inside the modal is clicked on
+        console.log('adding new post...');
+        console.log(`new post content: ${newPostContent}`);
     }
 
     const goToMainPage = () => {
@@ -49,7 +57,7 @@ function Toolbar() {
                 }}>
                     <Button variant="contained" disableElevation sx={{
                         bgcolor:'mediumseagreen'
-                    }} onClick={addNeWPost}>+New Post</Button>
+                    }} onClick={openNewPost}>+New Post</Button>
                     <Modal
                         disableEnforceFocus
                         disableAutoFocus
@@ -64,6 +72,8 @@ function Toolbar() {
                         </Typography>
                         <TextField
                             id="outlined-multiline-static"
+                            value={newPostContent}
+                            onChange={(event) => setNewPostContent(event.target.value)}
                             label="Express your thoughts here"
                             multiline
                             rows={4}
@@ -80,7 +90,7 @@ function Toolbar() {
                                 },
                             }}
                         />
-                        <Button sx={{bgcolor:'mediumseagreen'}} disableElevation variant="contained">Add</Button>
+                        <Button onClick={addNewPost} sx={{bgcolor:'mediumseagreen'}} disableElevation variant="contained">Add</Button>
                         </Box>
                     </Modal>
 
