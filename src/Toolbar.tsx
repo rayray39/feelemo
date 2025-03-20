@@ -7,9 +7,10 @@ import TextField from "@mui/material/TextField"
 import Typography from "@mui/material/Typography"
 import { useState } from "react"
 
-function Toolbar() {
+function Toolbar({ addJournalEntry }:{ addJournalEntry: (entry:string[]) => void }) {
     const [openNewPostModal, setOpenNewPostModal] = useState<boolean>(false);
     const [newPostContent, setNewPostContent] = useState<string>('');
+    const [username, setUsername] = useState<string>('');
     
     const modalBoxStyle = {
         position: 'absolute',
@@ -33,8 +34,13 @@ function Toolbar() {
         // when the 'ADD' button inside the modal is clicked on
         console.log('adding new post...');
         console.log(`new post content: ${newPostContent}`);
-        setNewPostContent('');
-        setOpenNewPostModal(false);
+        console.log(`username: ${username}`);
+        
+        const newEntry = [newPostContent, username];
+        addJournalEntry(newEntry);    // calls addJournalEntry in App
+        setNewPostContent('');          // clear textfield (post content)
+        setUsername('')                 // clear textfield (username)
+        setOpenNewPostModal(false);     // close the modal
     }
 
     const goToMainPage = () => {
@@ -64,7 +70,7 @@ function Toolbar() {
                         disableEnforceFocus
                         disableAutoFocus
                         open={openNewPostModal}
-                        onClose={() => setOpenNewPostModal(false)}
+                        onClose={() => (setOpenNewPostModal(false))}
                         aria-labelledby="modal-modal-title"
                         aria-describedby="modal-modal-description"
                     >
@@ -82,6 +88,22 @@ function Toolbar() {
                             fullWidth
                             sx={{
                                 marginTop: '20px',
+                                marginBottom: '20px',
+                                bgcolor:'#ECEBEB',
+                                '& .MuiOutlinedInput-notchedOutline':{
+                                    border:'none'
+                                },
+                                '& label.Mui-focused': {
+                                    color: 'black',
+                                },
+                            }}
+                        />
+                        <TextField
+                            value={username}
+                            onChange={(event) => setUsername(event.target.value)}
+                            label='Enter a name'
+                            fullWidth
+                            sx={{
                                 marginBottom: '20px',
                                 bgcolor:'#ECEBEB',
                                 '& .MuiOutlinedInput-notchedOutline':{
