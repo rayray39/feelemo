@@ -7,7 +7,7 @@ import TextField from "@mui/material/TextField"
 import Typography from "@mui/material/Typography"
 import { useState } from "react"
 
-function Toolbar() {
+function Toolbar({ addJournalEntry }:{ addJournalEntry: (entry:string) => void }) {
     const [openNewPostModal, setOpenNewPostModal] = useState<boolean>(false);
     const [newPostContent, setNewPostContent] = useState<string>('');
     
@@ -33,8 +33,10 @@ function Toolbar() {
         // when the 'ADD' button inside the modal is clicked on
         console.log('adding new post...');
         console.log(`new post content: ${newPostContent}`);
-        setNewPostContent('');
-        setOpenNewPostModal(false);
+        
+        addJournalEntry(newPostContent);    // calls addJournalEntry in App
+        setNewPostContent('');          // clear textfield
+        setOpenNewPostModal(false);     // close the modal
     }
 
     const goToMainPage = () => {
@@ -64,7 +66,7 @@ function Toolbar() {
                         disableEnforceFocus
                         disableAutoFocus
                         open={openNewPostModal}
-                        onClose={() => setOpenNewPostModal(false)}
+                        onClose={() => (setOpenNewPostModal(false))}
                         aria-labelledby="modal-modal-title"
                         aria-describedby="modal-modal-description"
                     >
