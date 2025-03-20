@@ -1,10 +1,13 @@
+import Stack from "@mui/material/Stack"
 import JournalEntry from "./JournalEntry"
 
 function JournalEntries({ entries }:{ entries:string[] }) {
     return <>   
-        {entries.map((entry, index) => (
-            <JournalEntry key={index} entry={entry}/>
-        ))}     
+        <Stack spacing={2}>
+            {entries.map((entry, index) => (
+                <JournalEntry key={index} entry={entry}/>
+            ))}      
+        </Stack>   
     </>
 }
 
