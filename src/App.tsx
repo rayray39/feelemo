@@ -4,9 +4,9 @@ import Stack from "@mui/material/Stack"
 import JournalEntries from "./JournalEntries";
 
 function App() {
-    const [journalEntries, setJournalEntries] = useState<string[]>([]);
+    const [journalEntries, setJournalEntries] = useState<string[][]>([]);
 
-    const addJournalEntry = (newEntry:string) => {
+    const addJournalEntry = (newEntry:string[]) => {
         // passed into Toolbar for adding a new journal entry
         setJournalEntries(prev => [...prev, newEntry]);
     }
