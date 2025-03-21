@@ -104,10 +104,10 @@ function Toolbar({ addJournalEntry }:{ addJournalEntry: (entry:string[]) => void
                         <Typography id="modal-modal-title" variant="h6" component="h2" sx={{fontWeight:'bold'}}>
                             How are you feeling today...
                         </Typography>
-                        <Typography hidden={isUsernameFilled} id="modal-modal-title" variant="h6" component="h4"  sx={{color:'red'}}>
+                        <Typography hidden={isUsernameFilled} id="modal-modal-title" sx={{color:'red', fontSize:'12px'}}>
                             {usernameNotFilledText}
                         </Typography>
-                        <Typography hidden={isJournalContentFilled} id="modal-modal-title" variant="h6" component="h4" sx={{color:'red'}}>
+                        <Typography hidden={isJournalContentFilled} id="modal-modal-title" sx={{color:'red', fontSize:'12px'}}>
                             {JournalEntryNotFilledText}
                         </Typography>
                         <TextField
