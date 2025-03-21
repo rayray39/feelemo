@@ -6,6 +6,16 @@ import Typography from "@mui/material/Typography"
 function JournalEntry({ entry }:{ entry:string[] }) {
     // entry[0] == content
     // entry[1] == username
+
+    const getCurrentDate = (): string => {
+        // returns the current date in dd-mm-yyyy format
+        const today = new Date();
+        const day = String(today.getDate()).padStart(2, "0");           // Ensure two digits
+        const month = String(today.getMonth() + 1).padStart(2, "0");    // Months are 0-based
+        const year = today.getFullYear();
+    
+        return `${day}-${month}-${year}`;
+    };
     
     return <>
         <Card>
@@ -14,8 +24,8 @@ function JournalEntry({ entry }:{ entry:string[] }) {
                     <Typography variant="body1" sx={{ color: 'text.secondary' }}>
                         {entry[0]}
                     </Typography>
-                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                        {`By ${entry[1]}`}
+                    <Typography variant="body2" sx={{ color: 'text.secondary', marginTop:'5px' }}>
+                        {`By ${entry[1]}, ${getCurrentDate()}`}
                     </Typography>
                 </CardContent>
             </CardActionArea>
