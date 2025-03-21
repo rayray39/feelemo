@@ -15,8 +15,10 @@ function Toolbar({ addJournalEntry }:{ addJournalEntry: (entry:string[]) => void
     // username attached to the journal entry
     const [username, setUsername] = useState<string>('');
 
+    // checks if the username field is filled before submission
     const [isUsernameFilled, setIsUsernameFilled] = useState<boolean>(true);
     const usernameNotFilledText:string = 'Please fill in a name';
+    // checks if the journal content is filled before submission
     const [isJournalContentFilled, setIsJournalContentFilled] = useState<boolean>(true);
     const JournalEntryNotFilledText:string = 'Please fill in the journal entry';
     
@@ -118,6 +120,7 @@ function Toolbar({ addJournalEntry }:{ addJournalEntry: (entry:string[]) => void
                             multiline
                             rows={4}
                             fullWidth
+                            // error={!isJournalContentFilled}
                             sx={{
                                 marginTop: '20px',
                                 marginBottom: '20px',
@@ -135,6 +138,7 @@ function Toolbar({ addJournalEntry }:{ addJournalEntry: (entry:string[]) => void
                             onChange={(event) => setUsername(event.target.value)}
                             label='Enter a name'
                             fullWidth
+                            // error={!isUsernameFilled}
                             sx={{
                                 marginBottom: '20px',
                                 bgcolor:'#ECEBEB',
