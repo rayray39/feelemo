@@ -8,9 +8,17 @@ import Typography from "@mui/material/Typography"
 import { useState } from "react"
 
 function Toolbar({ addJournalEntry }:{ addJournalEntry: (entry:string[]) => void }) {
+    // controls the state of the modal, for adding new journal entry
     const [openNewPostModal, setOpenNewPostModal] = useState<boolean>(false);
+    // content of new journal entry
     const [newPostContent, setNewPostContent] = useState<string>('');
+    // username attached to the journal entry
     const [username, setUsername] = useState<string>('');
+
+    const [isUsernameFilled, setIsUsernameFilled] = useState<boolean>(true);
+    const usernameNotFilledText:string = 'Please fill in a name';
+    const [isJournalContentFilled, setIsJournalContentFilled] = useState<boolean>(true);
+    const JournalEntryNotFilledText:string = 'Please fill in the journal entry';
     
     const modalBoxStyle = {
         position: 'absolute',
@@ -27,20 +35,38 @@ function Toolbar({ addJournalEntry }:{ addJournalEntry: (entry:string[]) => void
     const openNewPost = () => {
         // when '+ New Post' button on the toolbar is clicked on
         console.log('opening new post...');
+        setNewPostContent('');          // clear textfield (post content)
+        setUsername('')                 // clear textfield (username)
         setOpenNewPostModal(true);
     }
 
     const addNewPost = () => {
         // when the 'ADD' button inside the modal is clicked on
         console.log('adding new post...');
+        if (!username) {
+            setIsUsernameFilled(false);
+            console.log('ERROR: missing username.');
+            return;
+        } else {
+            setIsUsernameFilled(true);
+        }
+        if (!newPostContent) {
+            setIsJournalContentFilled(false);
+            console.log('ERROR: missing journal entry content.');
+            return;
+        } else {
+            setIsJournalContentFilled(true);
+        }
         console.log(`new post content: ${newPostContent}`);
         console.log(`username: ${username}`);
         
         const newEntry = [newPostContent, username];
-        addJournalEntry(newEntry);    // calls addJournalEntry in App
+        if (username && newPostContent) {
+            addJournalEntry(newEntry);    // calls addJournalEntry in App
+            setOpenNewPostModal(false);     // close the modal
+        }
         setNewPostContent('');          // clear textfield (post content)
         setUsername('')                 // clear textfield (username)
-        setOpenNewPostModal(false);     // close the modal
     }
 
     const goToMainPage = () => {
@@ -70,13 +96,19 @@ function Toolbar({ addJournalEntry }:{ addJournalEntry: (entry:string[]) => void
                         disableEnforceFocus
                         disableAutoFocus
                         open={openNewPostModal}
-                        onClose={() => (setOpenNewPostModal(false))}
+                        onClose={() => (setOpenNewPostModal(false), setIsUsernameFilled(true), setIsJournalContentFilled(true))}
                         aria-labelledby="modal-modal-title"
                         aria-describedby="modal-modal-description"
                     >
                         <Box sx={modalBoxStyle}>
                         <Typography id="modal-modal-title" variant="h6" component="h2" sx={{fontWeight:'bold'}}>
                             How are you feeling today...
+                        </Typography>
+                        <Typography hidden={isUsernameFilled} id="modal-modal-title" variant="h6" component="h4"  sx={{color:'red'}}>
+                            {usernameNotFilledText}
+                        </Typography>
+                        <Typography hidden={isJournalContentFilled} id="modal-modal-title" variant="h6" component="h4" sx={{color:'red'}}>
+                            {JournalEntryNotFilledText}
                         </Typography>
                         <TextField
                             id="outlined-multiline-static"
