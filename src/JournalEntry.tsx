@@ -16,10 +16,15 @@ function JournalEntry({ entry }:{ entry:string[] }) {
     
         return `${day}-${month}-${year}`;
     };
+
+    const handleCardSelected = () => {
+        console.log(`opening card by ${entry[1]}`);
+
+    }
     
     return <>
         <Card>
-            <CardActionArea>
+            <CardActionArea onClick={handleCardSelected}>
                 <CardContent>
                     <Typography variant="body1" sx={{ color: 'text.secondary' }}>
                         {entry[0]}
