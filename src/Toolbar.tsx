@@ -45,19 +45,22 @@ function Toolbar({ addJournalEntry }:{ addJournalEntry: (entry:string[]) => void
     const addNewPost = () => {
         // when the 'ADD' button inside the modal is clicked on
         console.log('adding new post...');
+        if (!newPostContent) {
+            setIsJournalContentFilled(false);
+            console.log('ERROR: missing journal entry content.');
+            if (username) {
+                setIsUsernameFilled(true);
+            }
+            return;
+        } else {
+            setIsJournalContentFilled(true);
+        }
         if (!username) {
             setIsUsernameFilled(false);
             console.log('ERROR: missing username.');
             return;
         } else {
             setIsUsernameFilled(true);
-        }
-        if (!newPostContent) {
-            setIsJournalContentFilled(false);
-            console.log('ERROR: missing journal entry content.');
-            return;
-        } else {
-            setIsJournalContentFilled(true);
         }
         console.log(`new post content: ${newPostContent}`);
         console.log(`username: ${username}`);
@@ -106,11 +109,11 @@ function Toolbar({ addJournalEntry }:{ addJournalEntry: (entry:string[]) => void
                         <Typography id="modal-modal-title" variant="h6" component="h2" sx={{fontWeight:'bold'}}>
                             How are you feeling today...
                         </Typography>
-                        <Typography hidden={isUsernameFilled} id="modal-modal-title" sx={{color:'red', fontSize:'12px'}}>
-                            {usernameNotFilledText}
-                        </Typography>
                         <Typography hidden={isJournalContentFilled} id="modal-modal-title" sx={{color:'red', fontSize:'12px'}}>
                             {JournalEntryNotFilledText}
+                        </Typography>
+                        <Typography hidden={isUsernameFilled} id="modal-modal-title" sx={{color:'red', fontSize:'12px'}}>
+                            {usernameNotFilledText}
                         </Typography>
                         <TextField
                             id="outlined-multiline-static"
