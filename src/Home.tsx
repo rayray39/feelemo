@@ -4,9 +4,10 @@ import JournalEntries from "./JournalEntries";
 import { useState } from "react";
 
 function Home() {
-    const [journalEntries, setJournalEntries] = useState<string[][]>([]);
+    // each journal entry is a list, and each attribute in the entry is either a number of string
+    const [journalEntries, setJournalEntries] = useState<(number | string)[][]>([]);
 
-    const addJournalEntry = (newEntry:string[]) => {
+    const addJournalEntry = (newEntry:(number | string)[]) => {
         // passed into Toolbar for adding a new journal entry
         setJournalEntries(prev => [...prev, newEntry]);
     }

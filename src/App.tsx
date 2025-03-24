@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Home from './Home';
+import CommentPage from './CommentPage';
 
 function App() {
 
@@ -7,6 +8,7 @@ function App() {
         <Router>
             <Routes>
                 <Route path='/' element={<Home />}/>
+                <Route path='/comments/:id' element={<CommentPage />}/>
             </Routes>
         </Router>
     </>    
