@@ -42,6 +42,16 @@ function Toolbar({ addJournalEntry }:{ addJournalEntry: (entry:string[]) => void
         setOpenNewPostModal(true);
     }
 
+    const getCurrentDate = (): string => {
+        // returns the current date in dd-mm-yyyy format
+        const today = new Date();
+        const day = String(today.getDate()).padStart(2, "0");           // Ensure two digits
+        const month = String(today.getMonth() + 1).padStart(2, "0");    // Months are 0-based
+        const year = today.getFullYear();
+    
+        return `${day}-${month}-${year}`;
+    };
+
     const addNewPost = () => {
         // when the 'ADD' button inside the modal is clicked on
         console.log('adding new post...');
@@ -65,7 +75,7 @@ function Toolbar({ addJournalEntry }:{ addJournalEntry: (entry:string[]) => void
         console.log(`new post content: ${newPostContent}`);
         console.log(`username: ${username}`);
         
-        const newEntry = [newPostContent, username];
+        const newEntry = [newPostContent, username, getCurrentDate()];
         if (username && newPostContent) {
             addJournalEntry(newEntry);    // calls addJournalEntry in App
             setOpenNewPostModal(false);     // close the modal
