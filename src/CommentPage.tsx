@@ -8,11 +8,16 @@ import Button from "@mui/material/Button";
 function CommentPage() {
     // comments page for the journal entry with id
     const { id } = useParams();     // extract the 'id' field from the URL
-    const [comment, setComment] = useState<string>('');
+    const [newComment, setNewComment] = useState<string>('');
+    const [comments, setComments] = useState<string[]>([]);
 
     const addComment = () => {
-        console.log(`adding new comment: ${comment}`);
-        setComment('');
+        console.log(`adding new comment: ${newComment}`);
+        if (!newComment) {
+            return;
+        }
+        setComments(prev => [...prev, newComment]);
+        setNewComment('');
     }
 
     return <Stack sx={{
@@ -24,8 +29,8 @@ function CommentPage() {
         <>
             <TextField
                 id="outlined-multiline-static"
-                value={comment}
-                onChange={(event) => setComment(event.target.value)}
+                value={newComment}
+                onChange={(event) => setNewComment(event.target.value)}
                 label="Leave a comment! (No account needed)"
                 multiline
                 rows={4}
@@ -43,6 +48,12 @@ function CommentPage() {
                 }}
             />
             <Button onClick={addComment} sx={{bgcolor:'mediumseagreen'}} disableElevation variant="contained">Add Comment</Button>
+
+            {
+                comments.map((comment, index) => (
+                    <h1 key={index}>{comment}</h1>
+                ))
+            }
         </>
     </Stack>
 }
