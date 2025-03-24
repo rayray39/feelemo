@@ -6,8 +6,11 @@ import Stack from "@mui/material/Stack"
 import TextField from "@mui/material/TextField"
 import Typography from "@mui/material/Typography"
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 function Toolbar({ addJournalEntry }:{ addJournalEntry: (entry:string[]) => void }) {
+    const navigate = useNavigate();
+    
     // controls the state of the modal, for adding new journal entry
     const [openNewPostModal, setOpenNewPostModal] = useState<boolean>(false);
     // content of new journal entry
@@ -85,7 +88,8 @@ function Toolbar({ addJournalEntry }:{ addJournalEntry: (entry:string[]) => void
     }
 
     const goToMainPage = () => {
-        console.log('going to main page...');
+        console.log('going to home page...');
+        navigate('/');
     }
 
     const visitPortfolio = () => {
