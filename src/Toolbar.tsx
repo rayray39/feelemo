@@ -6,8 +6,12 @@ import Stack from "@mui/material/Stack"
 import TextField from "@mui/material/TextField"
 import Typography from "@mui/material/Typography"
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 
-function Toolbar({ addJournalEntry }:{ addJournalEntry: (entry:string[]) => void }) {
+function Toolbar({ addJournalEntry }:{ addJournalEntry: (entry:(number | string)[]) => void }) {
+    const navigate = useNavigate();
+    const [cardIndex, setCardIndex] = useState<number>(1);
+    
     // controls the state of the modal, for adding new journal entry
     const [openNewPostModal, setOpenNewPostModal] = useState<boolean>(false);
     // content of new journal entry
@@ -42,6 +46,16 @@ function Toolbar({ addJournalEntry }:{ addJournalEntry: (entry:string[]) => void
         setOpenNewPostModal(true);
     }
 
+    const getCurrentDate = (): string => {
+        // returns the current date in dd-mm-yyyy format
+        const today = new Date();
+        const day = String(today.getDate()).padStart(2, "0");           // Ensure two digits
+        const month = String(today.getMonth() + 1).padStart(2, "0");    // Months are 0-based
+        const year = today.getFullYear();
+    
+        return `${day}-${month}-${year}`;
+    };
+
     const addNewPost = () => {
         // when the 'ADD' button inside the modal is clicked on
         console.log('adding new post...');
@@ -65,7 +79,9 @@ function Toolbar({ addJournalEntry }:{ addJournalEntry: (entry:string[]) => void
         console.log(`new post content: ${newPostContent}`);
         console.log(`username: ${username}`);
         
-        const newEntry = [newPostContent, username];
+        // cardIndex:number, newPostContent:string, username:string, getCurrentDate():string
+        const newEntry = [cardIndex, newPostContent, username, getCurrentDate()];
+        setCardIndex(cardIndex + 1);
         if (username && newPostContent) {
             addJournalEntry(newEntry);    // calls addJournalEntry in App
             setOpenNewPostModal(false);     // close the modal
@@ -75,7 +91,8 @@ function Toolbar({ addJournalEntry }:{ addJournalEntry: (entry:string[]) => void
     }
 
     const goToMainPage = () => {
-        console.log('going to main page...');
+        console.log('going to home page...');
+        navigate('/');
     }
 
     const visitPortfolio = () => {
