@@ -1,5 +1,5 @@
 import Stack from "@mui/material/Stack";
-import { useParams } from "react-router-dom"
+// import { useParams } from "react-router-dom"
 import ToolbarNoAdd from "./ToolbarNoAdd";
 import TextField from "@mui/material/TextField";
 import { useState } from "react";
@@ -7,9 +7,12 @@ import Button from "@mui/material/Button";
 
 function CommentPage() {
     // comments page for the journal entry with id
-    const { id } = useParams();     // extract the 'id' field from the URL
+    // const { id } = useParams();     // extract the 'id' field from the URL
     const [newComment, setNewComment] = useState<string>('');
     const [comments, setComments] = useState<string[]>([]);
+
+    // backend instructions
+    // 1. load the existing comments in table into comments (useEffect, get request)
 
     const addComment = () => {
         console.log(`adding new comment: ${newComment}`);
@@ -18,6 +21,9 @@ function CommentPage() {
         }
         setComments(prev => [...prev, newComment]);
         setNewComment('');
+
+        // backend instructions
+        // 1. add new comment into table (post request)
     }
 
     return <Stack sx={{

@@ -19,7 +19,7 @@ function JournalEntry({ entry }:{ entry:(number | string)[] }) {
 
     const handleCardSelected = () => {
         console.log(`opening card by ${username}`);
-        navigate(`/comments/${index}`)
+        navigate(`/comments/${index}`);
     }
     
     return <>

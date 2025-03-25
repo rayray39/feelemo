@@ -7,9 +7,15 @@ function Home() {
     // each journal entry is a list, and each attribute in the entry is either a number of string
     const [journalEntries, setJournalEntries] = useState<(number | string)[][]>([]);
 
+    // backend instructions
+    // 1. load existing journal entries in table and pass to JournalEntries (useEffect, get request)
+
     const addJournalEntry = (newEntry:(number | string)[]) => {
         // passed into Toolbar for adding a new journal entry
         setJournalEntries(prev => [...prev, newEntry]);
+
+        // backend instructions
+        // 1. add new journal entry into table (post request)
     }
 
     return <Stack sx={{
