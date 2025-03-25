@@ -11,6 +11,7 @@ app.use(express.json())
 const db = require("./database.cjs");
 
 
+// returns all journal entries in the database
 app.get('/all-journal-entries', (req, res) => {
     const query = 'SELECT * FROM journal_entries';
 
@@ -23,6 +24,7 @@ app.get('/all-journal-entries', (req, res) => {
     });
 })
 
+// adds a new journal entry into the database
 app.post('/add-journal-entry', (req, res) => {
     const { content, username, date } = req.body;
 
