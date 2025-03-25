@@ -4,6 +4,9 @@ import ToolbarNoAdd from "./ToolbarNoAdd";
 import TextField from "@mui/material/TextField";
 import { useState } from "react";
 import Button from "@mui/material/Button";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
 
 function CommentPage() {
     // comments page for the journal entry with id
@@ -55,13 +58,27 @@ function CommentPage() {
             />
             <Button onClick={addComment} sx={{bgcolor:'mediumseagreen'}} disableElevation variant="contained">Add Comment</Button>
 
-            {
-                comments.map((comment, index) => (
-                    <h1 key={index}>{comment}</h1>
-                ))
-            }
+            <Stack spacing={1} sx={{
+                marginTop:'50px'
+            }}>
+                {comments.map((comment, index) => (
+                    <Comment key={index} content={comment} />
+                ))}
+            </Stack>
         </>
     </Stack>
+}
+
+function Comment({ content }:{ content:string }) {
+    return <>
+        <Card>
+            <CardContent>
+                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                    {content}
+                </Typography>
+            </CardContent>
+        </Card>
+    </>
 }
 
 export default CommentPage
