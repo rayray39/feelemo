@@ -15,6 +15,9 @@ function CommentPage() {
     const [newCommentContent, setNewCommentContent] = useState<string>('');
     const [comments, setComments] = useState<(number | string)[][]>([]);
 
+    // the parent journal entry that this comment page belongs to
+    const [parentJournalEntry, setParentJournalEntry] = useState<(number | string)[]>([]);
+
     // backend instructions
     // 1. load the existing comments in table into comments (useEffect, get request)
 
@@ -41,7 +44,38 @@ function CommentPage() {
         setComments(formattedComments);
     }
 
+    const getParentJournalEntry = async () => {
+        // fetches the parent journal entry that this comment page belongs to from the backend
+        const response = await fetch(`http://localhost:5000/journal-entry/${journalId}`, {
+            method:'GET',
+            headers:{'Content-Type':'application/json'},
+        })
+
+        if (!response.ok) {
+            console.log('Error fetching parent journal entry.');
+            return;
+        }
+
+        const data = await response.json();
+        console.log(data.message);
+
+        if (!data.journalEntry) {
+            console.error("No journal entry found");
+            return;
+        }
+
+        const formattedJournalEntry = [
+            data.journalEntry.id,
+            data.journalEntry.content,
+            data.journalEntry.username,
+            data.journalEntry.date,
+        ]
+
+        setParentJournalEntry(formattedJournalEntry);
+    }
+
     useEffect(() => {
+        getParentJournalEntry();
         getCommentsFromBackend();
     }, [])
 
@@ -98,6 +132,17 @@ function CommentPage() {
     }}>
         <ToolbarNoAdd />
         <>
+            <Card>
+                <CardContent>
+                    <Typography variant="body1" sx={{ color: 'text.secondary' }}>
+                        {parentJournalEntry[1]}
+                    </Typography>
+                    <Typography variant="body2" sx={{ color: 'text.secondary', marginTop:'5px' }}>
+                        {`By ${parentJournalEntry[2]}, ${parentJournalEntry[3]}`}
+                    </Typography>
+                </CardContent>
+            </Card>
+
             <TextField
                 id="outlined-multiline-static"
                 value={newCommentContent}
@@ -107,7 +152,7 @@ function CommentPage() {
                 rows={2}
                 fullWidth
                 sx={{
-                    marginTop: '20px',
+                    marginTop: '50px',
                     marginBottom: '20px',
                     bgcolor:'white',
                     '& .MuiOutlinedInput-notchedOutline':{

@@ -25,6 +25,23 @@ app.get('/all-journal-entries', (req, res) => {
     });
 })
 
+// returns a journal entry in the database
+// CommentPage.tsx:getParentJournalEntry
+app.get('/journal-entry/:id', (req, res) => {
+    const {id} = req.params;
+
+    const query = 'SELECT * FROM journal_entries WHERE id = ?';
+
+    db.get(query, [id], (err, rows) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+            return;
+        }
+        res.json({journalEntry:rows, message: 'Successfully fetched journal entry!'});
+    });
+})
+
+
 // adds a new journal entry into the database
 // Home.tsx:addJournalEntryToBackend
 app.post('/add-journal-entry', (req, res) => {
@@ -65,7 +82,7 @@ app.delete('/delete-journal-entry/:id', (req, res) => {
     })
 })
 
-// get comments that belong to the journal entry with id = journalId
+// get all comments that belong to the journal entry with id = journalId
 // CommentPage.tsx:getCommentsFromBackend
 app.get('/get-comments/:journalId', (req, res) => {
     const { journalId } = req.params;
