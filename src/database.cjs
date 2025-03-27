@@ -34,9 +34,26 @@ db.serialize(() => {
         )`,
         (err) => {
             if (err) {
-                console.error("Error creating table:", err.message);
+                console.error("Error creating journal_entries table:", err.message);
             } else {
                 console.log("Table 'journal_entries' is ready.");
+            }
+        }
+    );
+
+    db.run(
+        `CREATE TABLE IF NOT EXISTS comments (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            journal_id INTEGER NOT NULL,
+            content TEXT NOT NULL,
+            likes INTEGER NOT NULL,
+            FOREIGN KEY (journal_id) REFERENCES journal_entries (id) ON DELETE CASCADE
+        )`,
+        (err) => {
+            if (err) {
+                console.error("Error creating comments table:", err.message);
+            } else {
+                console.log("Table 'comments' is ready.");
             }
         }
     );

@@ -65,6 +65,46 @@ app.delete('/delete-journal-entry/:id', (req, res) => {
     })
 })
 
+// get comments that belong to the journal entry with id = journalId
+// CommentPage.tsx:getCommentsFromBackend
+app.get('/get-comments/:journalId', (req, res) => {
+    const { journalId } = req.params;
+
+    if (!journalId) {
+        return res.status(400).json({ message: 'Missing journal id field.' });
+    }
+
+    const query = 'SELECT * FROM comments WHERE journal_id = ?';
+
+    db.all(query, [journalId], (err, rows) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+            return;
+        }
+        res.json({comments:rows, message: 'Successfully fetched comments!'});
+    });
+})
+
+// adds new comment to a journal entry in the database
+// CommentPage.tsx:addCommentToJournalEntry
+app.post('/add-comment', (req, res) => {
+    const {journal_id, content, likes} = req.body;
+
+    if (!journal_id || !content) {
+        return res.status(400).json({ message: 'Missing fields.' });
+    }
+
+    const query = 'INSERT INTO comments (journal_id, content, likes) VALUES (?, ?, ?)';
+
+    db.run(query, [journal_id, content, likes], function (err) {
+        if (err) {
+            res.status(500).json({ error: err.message });
+            return;
+        }
+        res.json({ message: 'Comment added to journal entry!' });
+    });
+})
+
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 })

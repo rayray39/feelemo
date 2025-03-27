@@ -1,8 +1,8 @@
 import Stack from "@mui/material/Stack";
-// import { useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import ToolbarNoAdd from "./ToolbarNoAdd";
 import TextField from "@mui/material/TextField";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -10,12 +10,61 @@ import Typography from "@mui/material/Typography";
 
 function CommentPage() {
     // comments page for the journal entry with id
-    // const { id } = useParams();     // extract the 'id' field from the URL
+    const { id } = useParams();     // extract the 'id' field from the URL
+    const journalId = id ? parseInt(id) : null;
     const [newCommentContent, setNewCommentContent] = useState<string>('');
     const [comments, setComments] = useState<(number | string)[][]>([]);
 
     // backend instructions
     // 1. load the existing comments in table into comments (useEffect, get request)
+
+    const getCommentsFromBackend = async () => {
+        // fetches all existing comments for this journal entry from the database
+        const response = await fetch(`http://localhost:5000/get-comments/${journalId}`, {
+            method:'GET',
+            headers:{'Content-Type':'application/json'},
+        })
+
+        if (!response.ok) {
+            console.log('Error fetching comments from journal entry.');
+            return;
+        }
+
+        const data = await response.json();
+        console.log(data.message);
+
+        const formattedComments = data.comments.map((comment:{content: string; likes: number;}) => [
+            comment.content,
+            comment.likes
+        ])
+
+        setComments(formattedComments);
+    }
+
+    useEffect(() => {
+        getCommentsFromBackend();
+    }, [])
+
+    const addCommentToJournalEntry = async (newComment:(number | string)[]) => {
+        // adds the comment to the journal entry in database
+        const response = await fetch('http://localhost:5000/add-comment', {
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body:JSON.stringify({
+                journal_id:journalId,
+                content:newComment[0],
+                likes:newComment[1],
+            })
+        })
+
+        if (!response.ok) {
+            console.log('Error adding comment to journal entry.');
+            return;
+        }
+
+        const data = await response.json();
+        console.log(data.message);
+    }
 
     const addComment = () => {
         console.log(`adding new comment: ${newCommentContent}`);
@@ -29,6 +78,7 @@ function CommentPage() {
 
         // backend instructions
         // 1. add new comment into table (post request)
+        addCommentToJournalEntry(newComment);
     }
 
     const handleLike = (index:number) => {
