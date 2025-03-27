@@ -12,6 +12,7 @@ const db = require("./database.cjs");
 
 
 // returns all journal entries in the database
+// Home.tsx:getJournalEntriesFromBackend
 app.get('/all-journal-entries', (req, res) => {
     const query = 'SELECT * FROM journal_entries';
 
@@ -25,6 +26,7 @@ app.get('/all-journal-entries', (req, res) => {
 })
 
 // adds a new journal entry into the database
+// Home.tsx:addJournalEntryToBackend
 app.post('/add-journal-entry', (req, res) => {
     const { content, username, date } = req.body;
 
@@ -41,6 +43,26 @@ app.post('/add-journal-entry', (req, res) => {
         }
         res.json({ message: 'Journal entry added!' });
     });
+})
+
+// deletes a journal entry with the id from the database
+// Home.tsx:handleDelete
+app.delete('/delete-journal-entry/:id', (req, res) => {
+    const { id } = req.params;
+
+    if (!id) {
+        return res.status(400).json({ message: 'Missing id field.' });
+    }
+
+    const query = 'DELETE FROM journal_entries WHERE id = ?';
+
+    db.run(query, [id], function (err) {
+        if (err) {
+            res.status(500).json({ error: err.message });
+            return;
+        }
+        res.json({ message: `Journal entry ${id} deleted!` });
+    })
 })
 
 app.listen(PORT, () => {

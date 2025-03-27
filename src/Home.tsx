@@ -2,6 +2,7 @@ import Stack from "@mui/material/Stack";
 import Toolbar from "./Toolbar";
 import JournalEntries from "./JournalEntries";
 import { useEffect, useState } from "react";
+// import Button from "@mui/material/Button";
 
 function Home() {
     // each journal entry is a list, and each attribute in the entry is either a number of string
@@ -70,6 +71,23 @@ function Home() {
         addJournalEntryToBackend(newEntry);
     }
 
+    // deletes an entry from the database
+    // const handleDelete = async () => {
+    //     alert('successfully deleted')
+    //     const response = await fetch('http://localhost:5000/delete-journal-entry/3', {
+    //         method:'DELETE',
+    //         headers:{'Content-Type':'application/json'},
+    //     })
+
+    //     if (!response.ok) {
+    //         console.log('Error deleting journal entry from backend.');
+    //         return;
+    //     }
+
+    //     const data = await response.json();
+    //     console.log(data.message);
+    // }
+
     return <Stack sx={{
         maxWidth:'50%',
         transform:'translateX(50%)',
@@ -77,6 +95,8 @@ function Home() {
     }}>
         <Toolbar addJournalEntry={addJournalEntry} />
         <JournalEntries entries={journalEntries} />
+
+        {/* <Button onClick={handleDelete}>delete entry</Button> */}
     </Stack>
 }
 
