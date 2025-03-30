@@ -5,7 +5,7 @@ function JournalEntries({ entries }:{ entries:(number | string)[][] }) {
     return <>   
         <Stack spacing={2}>
             {entries.map((entry, index) => (
-                <JournalEntry key={index} entry={entry}/>
+                <JournalEntry key={index} cardIndex={index} entry={entry}/>
             ))}      
         </Stack>   
     </>
