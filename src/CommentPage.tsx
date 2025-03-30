@@ -10,8 +10,8 @@ import Typography from "@mui/material/Typography";
 
 function CommentPage() {
     // comments page for the journal entry with id
-    const { id } = useParams();     // extract the 'id' field from the URL
-    const journalId = id ? parseInt(id) : null;
+    const { id } = useParams();     // extract the 'id' field from the URL (zero-based)
+    const journalId = id ? parseInt(id) + 1 : null;
     const [newCommentContent, setNewCommentContent] = useState<string>('');
     const [comments, setComments] = useState<(number | string)[][]>([]);
 
