@@ -4,22 +4,22 @@ import CardContent from "@mui/material/CardContent"
 import Typography from "@mui/material/Typography"
 import { useNavigate } from "react-router-dom"
 
-function JournalEntry({ entry }:{ entry:(number | string)[] }) {
-    // entry[0] == index
-    // entry[1] == content
-    // entry[2] == username
-    // entry[3] == date of creation
+function JournalEntry({ cardIndex, entry }:{ cardIndex:number, entry:(number | string)[] }) {
+    // entry[0] == content
+    // entry[1] == username
+    // entry[2] == date of creation
+    // cardIndex is 0 based and keeps track of the index in the list of journal entries
 
     const navigate = useNavigate();
 
-    const index = entry[0];
-    const content = entry[1];
-    const username = entry[2];
-    const date = entry[3];
+    const content = entry[0];
+    const username = entry[1];
+    const date = entry[2];
 
     const handleCardSelected = () => {
         console.log(`opening card by ${username}`);
-        navigate(`/comments/${index}`);
+        console.log(`navigating to comment: ${cardIndex}`);
+        navigate(`/${cardIndex}/comments`);
     }
     
     return <>

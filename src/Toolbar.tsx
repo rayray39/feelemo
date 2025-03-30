@@ -10,7 +10,6 @@ import { useNavigate } from "react-router-dom"
 
 function Toolbar({ addJournalEntry }:{ addJournalEntry: (entry:(number | string)[]) => void }) {
     const navigate = useNavigate();
-    const [cardIndex, setCardIndex] = useState<number>(1);
     
     // controls the state of the modal, for adding new journal entry
     const [openNewPostModal, setOpenNewPostModal] = useState<boolean>(false);
@@ -79,9 +78,8 @@ function Toolbar({ addJournalEntry }:{ addJournalEntry: (entry:(number | string)
         console.log(`new post content: ${newPostContent}`);
         console.log(`username: ${username}`);
         
-        // cardIndex:number, newPostContent:string, username:string, getCurrentDate():string
-        const newEntry = [cardIndex, newPostContent, username, getCurrentDate()];
-        setCardIndex(cardIndex + 1);
+        // newPostContent:string, username:string, getCurrentDate():string
+        const newEntry = [newPostContent, username, getCurrentDate()];
         if (username && newPostContent) {
             addJournalEntry(newEntry);    // calls addJournalEntry in App
             setOpenNewPostModal(false);     // close the modal

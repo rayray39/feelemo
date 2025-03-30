@@ -26,8 +26,7 @@ function Home() {
         const data = await response.json();
         console.log(data.message);
 
-        const formattedJournalEntries = data.journalEntries.map((entry:{id: number; content: string; username: string; date: string;}) => [
-            entry.id,
+        const formattedJournalEntries = data.journalEntries.map((entry:{content: string; username: string; date: string;}) => [
             entry.content,
             entry.username,
             entry.date,
@@ -47,9 +46,9 @@ function Home() {
             method:'POST',
             headers:{'Content-Type':'application/json'},
             body: JSON.stringify({
-                content: newEntry[1],
-                username: newEntry[2],
-                date: newEntry[3],
+                content: newEntry[0],
+                username: newEntry[1],
+                date: newEntry[2],
             })
         })
 
