@@ -47,6 +47,7 @@ function ToolbarNoAdd() {
 
             <Box sx={{
                 textAlign:'center',
+                marginBottom:'20px'
             }}>
                 <h1>Journal your feelings here</h1>
                 <h3>Write what you feel. No account needed!</h3>
