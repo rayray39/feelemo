@@ -13,6 +13,7 @@ function CommentPage() {
     const { id } = useParams();     // extract the 'id' field from the URL (zero-based)
     const journalId = id ? parseInt(id) + 1 : null;
     const [newCommentContent, setNewCommentContent] = useState<string>('');
+    // keeps track of all the comments made
     const [comments, setComments] = useState<(number | string)[][]>([]);
 
     // the parent journal entry that this comment page belongs to
@@ -36,7 +37,8 @@ function CommentPage() {
         const data = await response.json();
         console.log(data.message);
 
-        const formattedComments = data.comments.map((comment:{content: string; likes: number;}) => [
+        const formattedComments = data.comments.map((comment:{id:number; content: string; likes: number;}) => [
+            comment.id,     // id in comments database
             comment.content,
             comment.likes
         ])
@@ -86,8 +88,8 @@ function CommentPage() {
             headers:{'Content-Type':'application/json'},
             body:JSON.stringify({
                 journal_id:journalId,
-                content:newComment[0],
-                likes:newComment[1],
+                content:newComment[1],
+                likes:newComment[2],
             })
         })
 
@@ -105,7 +107,7 @@ function CommentPage() {
         if (!newCommentContent) {
             return;
         }
-        const newComment = [newCommentContent, 0];
+        const newComment = [comments.length+1, newCommentContent, 0];
         // each new comment is [content, numOfLikes]
         setComments(prev => [...prev, newComment]);
         setNewCommentContent('');
@@ -117,12 +119,39 @@ function CommentPage() {
 
     const handleLike = (index:number) => {
         // when the heart button is clicked on in the Comment card
+        // index is 0-based
         console.log(`liked card id: ${index}`);
-        
-        // updates the num of likes for the comment
-        setComments(prev => prev.map((comment, i) => 
-            i === index ? [comment[0], (comment[1] as number) + 1] : comment
-        ))
+        let idInDatabase = 0;
+        // updates the num of likes for the comment (frontend)
+        setComments(prev => prev.map((comment, i) => {
+            if (i === index) {
+                idInDatabase = comment[0] as number;
+                return [comment[0], comment[1], (comment[2] as number) + 1];
+            }
+            return comment
+        }))
+
+        // updates the num of likes for the comment (backend)
+        updateNumOfLikes(idInDatabase);
+    }
+
+    const updateNumOfLikes = async (idInDatabase:number) => {
+        // index is 0-based while id in backend is 1-based
+        const response = await fetch('http://localhost:5000/add-comment-like', {
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body:JSON.stringify({
+                id:idInDatabase
+            })
+        })
+
+        if (!response.ok) {
+            console.log('Error adding like to comment.');
+            return;
+        }
+
+        const data = await response.json();
+        console.log(data.message);
     }
 
     return <Stack sx={{
@@ -169,7 +198,7 @@ function CommentPage() {
                 marginTop:'50px'
             }}>
                 {comments.map((comment, index) => (
-                    <Comment key={index} handleLike={handleLike} index={index} content={comment[0]} numOfLikes={comment[1]} />
+                    <Comment key={index} handleLike={handleLike} index={index} content={comment[1]} numOfLikes={comment[2]} />
                 ))}
             </Stack>
         </>
