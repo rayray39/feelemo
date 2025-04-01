@@ -122,7 +122,8 @@ app.post('/add-comment', (req, res) => {
     });
 })
 
-
+// increments the number of likes on the comment that has id in comments table
+// CommentPage.tsx:updateNumOfLikes
 app.post('/add-comment-like', (req, res) => {
     const { id } = req.body;
 
