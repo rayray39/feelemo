@@ -11,9 +11,9 @@ import Typography from "@mui/material/Typography";
 function CommentPage() {
     // comments page for the journal entry with id
     const { id } = useParams();     // extract the 'id' field from the URL (zero-based)
-    const journalId = id ? parseInt(id) + 1 : null;
+    const journalId = id ? parseInt(id) + 1 : null;     // represents the id of the journal these comments belong to
     const [newCommentContent, setNewCommentContent] = useState<string>('');
-    // keeps track of all the comments made
+    // keeps track of all the comments made under the journal with table id = journalId
     const [comments, setComments] = useState<(number | string)[][]>([]);
 
     // the parent journal entry that this comment page belongs to
@@ -107,6 +107,7 @@ function CommentPage() {
         if (!newCommentContent) {
             return;
         }
+        // newComment[0] = id inside comments table in database, newComment[1] = content, newComment[2] = num of likes
         const newComment = [comments.length+1, newCommentContent, 0];
         // each new comment is [content, numOfLikes]
         setComments(prev => [...prev, newComment]);
@@ -119,7 +120,7 @@ function CommentPage() {
 
     const handleLike = (index:number) => {
         // when the heart button is clicked on in the Comment card
-        // index is 0-based
+        // index is 0-based, represents the index of the comment item in comments list
         console.log(`liked card id: ${index}`);
         let idInDatabase = 0;
         // updates the num of likes for the comment (frontend)
