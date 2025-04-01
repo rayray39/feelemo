@@ -122,6 +122,27 @@ app.post('/add-comment', (req, res) => {
     });
 })
 
+
+app.post('/add-comment-like', (req, res) => {
+    const { id } = req.body;
+
+    if (!id) {
+        return res.status(400).json({ message: 'Missing ID.' });
+    }
+
+    const query = 'UPDATE comments SET likes = likes + 1 WHERE id = ?';
+
+    db.run(query, [id], function (err) {
+        if (err) {
+            res.status(500).json({ error: err.message });
+            return;
+        }
+        res.json({ message: 'Successfully liked comment!' });
+    });
+})
+
+
+
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 })
