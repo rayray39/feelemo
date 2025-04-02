@@ -174,6 +174,9 @@ function Toolbar({ addJournalEntry }:{ addJournalEntry: (entry:(number | string)
 
                     <Button sx={{
                         color:'black',
+                        fontWeight:'bold',
+                        fontSize:'18px',
+                        letterSpacing:2,
                         '&:hover':{
                             bgcolor:'lightgrey',
                         }

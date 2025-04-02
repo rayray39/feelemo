@@ -32,6 +32,9 @@ function ToolbarNoAdd() {
                     <Button disabled={true} disableElevation></Button>
                     <Button sx={{
                         color:'black',
+                        fontWeight:'bold',
+                        fontSize:'18px',
+                        letterSpacing:2,
                         '&:hover':{
                             bgcolor:'lightgrey',
                         }
