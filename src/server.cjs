@@ -82,6 +82,7 @@ app.delete('/delete-journal-entry/:id', (req, res) => {
     })
 })
 
+
 // get all comments that belong to the journal entry with id = journalId
 // CommentPage.tsx:getCommentsFromBackend
 app.get('/get-comments/:journalId', (req, res) => {
@@ -139,6 +140,41 @@ app.post('/add-comment-like', (req, res) => {
             return;
         }
         res.json({ message: 'Successfully liked comment!' });
+    });
+})
+
+
+// adds the journal entry to the favourites table
+// JournalEntry.tsx:addToFavs
+app.post('/add-favourite', (req, res) => {
+    const { journalId } = req.body;
+
+    if (!journalId) {
+        return res.status(400).json({ message: 'Missing ID.' });
+    }
+
+    const query = 'INSERT INTO favourites (journal_id) VALUES (?)';
+
+    db.run(query, [journalId], function (err) {
+        if (err) {
+            res.status(500).json({ error: err.message });
+            return;
+        }
+        res.json({ message: 'Successfully added journal entry to favourites!' });
+    });
+})
+
+// get all journal entries that were added into favourites
+// 
+app.get('/get-favourites', (req, res) => {
+    const query = 'SELECT * FROM favourites';
+
+    db.all(query, [], (err, rows) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+            return;
+        }
+        res.json({favourites:rows, message: 'Successfully fetched favourites!'});
     });
 })
 

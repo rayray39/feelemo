@@ -25,6 +25,7 @@ const db = new sqlite3.Database(dbPath, (err) => {
 
 // Create the 'journal_entries' table if it doesn't exist
 db.serialize(() => {
+    // journal_entries table to store journal entries
     db.run(
         `CREATE TABLE IF NOT EXISTS journal_entries (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -41,6 +42,7 @@ db.serialize(() => {
         }
     );
 
+    // comments table to store the comments of a journal entry
     db.run(
         `CREATE TABLE IF NOT EXISTS comments (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -54,6 +56,22 @@ db.serialize(() => {
                 console.error("Error creating comments table:", err.message);
             } else {
                 console.log("Table 'comments' is ready.");
+            }
+        }
+    );
+
+    // favourites table to store journal entries marked as favourites
+    db.run(
+        `CREATE TABLE IF NOT EXISTS favourites (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            journal_id INTEGER NOT NULL,
+            FOREIGN KEY (journal_id) REFERENCES journal_entries (id) ON DELETE CASCADE
+        )`,
+        (err) => {
+            if (err) {
+                console.error("Error creating favourites table:", err.message);
+            } else {
+                console.log("Table 'favourites' is ready.");
             }
         }
     );

@@ -2,11 +2,16 @@ import Stack from "@mui/material/Stack";
 import Toolbar from "./Toolbar";
 import JournalEntries from "./JournalEntries";
 import { useEffect, useState } from "react";
-// import Button from "@mui/material/Button";
+import BottomNavigation from "@mui/material/BottomNavigation";
+import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 
 function Home() {
     // each journal entry is a list, and each attribute in the entry is either a number of string
     const [journalEntries, setJournalEntries] = useState<(number | string)[][]>([]);
+
+    const [favourites, setFavourites] = useState<string[][]>([]);
+
+    const [bottomNavValue, setBottomNavValue] = useState<number>(0);
 
     // backend instructions
     // 1. load existing journal entries in table and pass to JournalEntries (useEffect, get request)
@@ -40,6 +45,12 @@ function Home() {
         getJournalEntriesFromBackend();
     }, [])
 
+    useEffect(() => {
+        if (journalEntries.length > 0) {
+            getFavourites();
+        }
+    }, [journalEntries])
+
     const addJournalEntryToBackend = async (newEntry:(number | string)[]) => {
         // adds the journal entry to database
         const response = await fetch('http://localhost:5000/add-journal-entry', {
@@ -70,6 +81,27 @@ function Home() {
         addJournalEntryToBackend(newEntry);
     }
 
+    const getFavourites = async () => {
+        // fetches all journal entries from the database, that have been added into favourites
+        const response = await fetch('http://localhost:5000/get-favourites', {
+            method:'GET',
+            headers:{'Content-Type':'application/json'},
+        })
+
+        if (!response.ok) {
+            console.log('Error fetching favourites from backend.');
+            return;
+        }
+
+        const data = await response.json();
+        console.log(data.message);
+
+        console.log(journalEntries);
+        const favs = data.favourites.map((entry:{id:number, journal_id:number}) => journalEntries[entry.journal_id - 1]);    // list of journal ids
+        console.log(favs);
+        setFavourites(favs)
+    }
+
     // deletes an entry from the database
     // const handleDelete = async () => {
     //     alert('successfully deleted')
@@ -93,7 +125,23 @@ function Home() {
         marginTop:'20px'
     }}>
         <Toolbar addJournalEntry={addJournalEntry} />
-        <JournalEntries entries={journalEntries} />
+
+        <BottomNavigation 
+            sx={{
+                bgcolor:'none',
+                marginBottom:'30px'
+            }}
+            showLabels
+            value={bottomNavValue}
+            onChange={(_event, newValue) => {
+              setBottomNavValue(newValue);
+            }}
+        >
+            <BottomNavigationAction sx={{marginRight:'10px'}} label="ALL" />
+            <BottomNavigationAction onClick={getFavourites} sx={{marginLeft:'10px'}} label="FAVS" />
+        </BottomNavigation>
+
+        <JournalEntries entries={bottomNavValue == 0 ? journalEntries : favourites} />
 
         {/* <Button onClick={handleDelete}>delete entry</Button> */}
     </Stack>
