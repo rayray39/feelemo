@@ -4,7 +4,6 @@ import JournalEntries from "./JournalEntries";
 import { useEffect, useState } from "react";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
-// import Button from "@mui/material/Button";
 
 function Home() {
     // each journal entry is a list, and each attribute in the entry is either a number of string
@@ -134,7 +133,7 @@ function Home() {
             }}
             showLabels
             value={bottomNavValue}
-            onChange={(event, newValue) => {
+            onChange={(_event, newValue) => {
               setBottomNavValue(newValue);
             }}
         >
