@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 
-function Toolbar({ addJournalEntry }:{ addJournalEntry: (entry:(number | string)[]) => void }) {
+function Toolbar({ addJournalEntry }:{ addJournalEntry: (entry:(string)[]) => void }) {
     const navigate = useNavigate();
     
     // controls the state of the modal, for adding new journal entry

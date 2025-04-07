@@ -6,7 +6,7 @@ import CardContent from "@mui/material/CardContent"
 import Typography from "@mui/material/Typography"
 import { useNavigate } from "react-router-dom"
 
-function JournalEntry({ cardIndex, entry }:{ cardIndex:number, entry:(number | string)[] }) {
+function JournalEntry({ cardIndex, entry }:{ cardIndex:number, entry:(string)[] }) {
     // entry[0] == content
     // entry[1] == username
     // entry[2] == date of creation

@@ -7,7 +7,7 @@ import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 
 function Home() {
     // each journal entry is a list, and each attribute in the entry is either a number of string
-    const [journalEntries, setJournalEntries] = useState<(number | string)[][]>([]);
+    const [journalEntries, setJournalEntries] = useState<(string)[][]>([]);
 
     const [favourites, setFavourites] = useState<string[][]>([]);
 
@@ -51,7 +51,7 @@ function Home() {
         }
     }, [journalEntries])
 
-    const addJournalEntryToBackend = async (newEntry:(number | string)[]) => {
+    const addJournalEntryToBackend = async (newEntry:(string)[]) => {
         // adds the journal entry to database
         const response = await fetch('http://localhost:5000/add-journal-entry', {
             method:'POST',
@@ -72,7 +72,7 @@ function Home() {
         console.log(data.message);
     }
 
-    const addJournalEntry = (newEntry:(number | string)[]) => {
+    const addJournalEntry = (newEntry:(string)[]) => {
         // passed into Toolbar for adding a new journal entry
         setJournalEntries(prev => [...prev, newEntry]);
 
