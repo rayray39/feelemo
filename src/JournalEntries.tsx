@@ -1,7 +1,7 @@
 import Stack from "@mui/material/Stack"
 import JournalEntry from "./JournalEntry"
 
-function JournalEntries({ entries }:{ entries:(number | string)[][] }) {
+function JournalEntries({ entries }:{ entries:(string)[][] }) {
     return <>   
         <Stack spacing={2} sx={{
             marginBottom:'40px'
