@@ -164,6 +164,20 @@ app.post('/add-favourite', (req, res) => {
     });
 })
 
+// get all journal entries that were added into favourites
+// 
+app.get('/get-favourites', (req, res) => {
+    const query = 'SELECT * FROM favourites';
+
+    db.all(query, [], (err, rows) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+            return;
+        }
+        res.json({favourites:rows, message: 'Successfully fetched favourites!'});
+    });
+})
+
 
 
 app.listen(PORT, () => {
