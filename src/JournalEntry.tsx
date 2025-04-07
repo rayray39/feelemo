@@ -20,8 +20,29 @@ function JournalEntry({ cardIndex, entry }:{ cardIndex:number, entry:(number | s
 
     const handleCardSelected = () => {
         console.log(`opening card by ${username}`);
-        console.log(`navigating to comment: ${cardIndex}`);
+        console.log(`navigating to journal entry: ${cardIndex}`);
         navigate(`/${cardIndex}/comments`);
+    }
+
+    const addToFavs = async () => {
+        // adds the journal entry into favourites
+        console.log('adding card to favs');
+
+        const response = await fetch('http://localhost:5000/add-favourite', {
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body:JSON.stringify({
+                journalId: cardIndex + 1
+            })
+        })
+
+        if (!response.ok) {
+            const data = await response.json();
+            console.log(data.error);
+        }
+
+        const data = await response.json();
+        console.log(data.message);
     }
     
     return <>
@@ -44,7 +65,7 @@ function JournalEntry({ cardIndex, entry }:{ cardIndex:number, entry:(number | s
                 <Button sx={{
                     bgcolor:'mediumseagreen',
                     margin:'10px'
-                }} variant="contained" disableElevation>Add To Favs</Button>
+                }} variant="contained" disableElevation onClick={addToFavs} >Add To Favs</Button>
             </Box>
         </Card>
     </>
