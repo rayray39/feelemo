@@ -1,3 +1,5 @@
+import Box from "@mui/material/Box"
+import Button from "@mui/material/Button"
 import Card from "@mui/material/Card"
 import CardActionArea from "@mui/material/CardActionArea"
 import CardContent from "@mui/material/CardContent"
@@ -34,6 +36,16 @@ function JournalEntry({ cardIndex, entry }:{ cardIndex:number, entry:(number | s
                     </Typography>
                 </CardContent>
             </CardActionArea>
+
+            <Box sx={{
+                display:'flex',
+                justifyContent:'flex-end'
+            }}>
+                <Button sx={{
+                    bgcolor:'mediumseagreen',
+                    margin:'10px'
+                }} variant="contained" disableElevation>Add To Favs</Button>
+            </Box>
         </Card>
     </>
 }
