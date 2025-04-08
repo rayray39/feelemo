@@ -128,7 +128,7 @@ function Home() {
 
         <BottomNavigation 
             sx={{
-                bgcolor:'none',
+                bgcolor: 'rgba(0, 0, 0, 0.05)',
                 marginBottom:'30px'
             }}
             showLabels
@@ -137,8 +137,20 @@ function Home() {
               setBottomNavValue(newValue);
             }}
         >
-            <BottomNavigationAction sx={{marginRight:'10px'}} label="ALL" />
-            <BottomNavigationAction onClick={getFavourites} sx={{marginLeft:'10px'}} label="FAVS" />
+            <BottomNavigationAction sx={{
+                marginRight:'10px',
+                color:'black',
+                '&.Mui-selected': {
+                color: 'black',  // Change text color when selected (default is blue)
+                },
+            }} label="ALL" />
+            <BottomNavigationAction onClick={getFavourites} sx={{
+                marginLeft:'10px',
+                color:'black',
+                '&.Mui-selected': {
+                color: 'black',  // Change text color when selected (default is blue)
+                },
+            }} label="FAVS" />
         </BottomNavigation>
 
         <JournalEntries entries={bottomNavValue == 0 ? journalEntries : favourites} />
