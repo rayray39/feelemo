@@ -129,7 +129,10 @@ function Home() {
         <BottomNavigation 
             sx={{
                 bgcolor: 'rgba(0, 0, 0, 0.05)',
-                marginBottom:'30px'
+                marginBottom:'30px',
+                display:'flex',
+                justifyContent:'space-evenly',
+                width:'100%'
             }}
             showLabels
             value={bottomNavValue}
@@ -138,14 +141,12 @@ function Home() {
             }}
         >
             <BottomNavigationAction sx={{
-                marginRight:'10px',
                 color:'black',
                 '&.Mui-selected': {
                 color: 'black',  // Change text color when selected (default is blue)
                 },
             }} label="ALL" />
             <BottomNavigationAction onClick={getFavourites} sx={{
-                marginLeft:'10px',
                 color:'black',
                 '&.Mui-selected': {
                 color: 'black',  // Change text color when selected (default is blue)
