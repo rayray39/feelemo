@@ -64,7 +64,7 @@ db.serialize(() => {
     db.run(
         `CREATE TABLE IF NOT EXISTS favourites (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            journal_id INTEGER NOT NULL,
+            journal_id INTEGER NOT NULL UNIQUE,
             FOREIGN KEY (journal_id) REFERENCES journal_entries (id) ON DELETE CASCADE
         )`,
         (err) => {
