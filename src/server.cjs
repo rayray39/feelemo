@@ -157,6 +157,11 @@ app.post('/add-favourite', (req, res) => {
 
     db.run(query, [journalId], function (err) {
         if (err) {
+            if (err.message.includes('UNIQUE constraint failed')) {
+                // duplicate rows (journal_id)
+                return res.status(400).json({ message: 'Entry is already in favourites.' });
+            }
+            // normal error
             res.status(500).json({ error: err.message });
             return;
         }
@@ -177,6 +182,17 @@ app.get('/get-favourites', (req, res) => {
         res.json({favourites:rows, message: 'Successfully fetched favourites!'});
     });
 })
+
+// temp end point to reset favourites table 
+app.post('/reset-favourites', (req, res) => {
+    db.run(`DROP TABLE IF EXISTS favourites`, (err) => {
+        if (err) {
+            res.status(500).json({ message: "Error dropping favourites table", error: err.message });
+        } else {
+            res.json({ message: "Favourites table dropped successfully." });
+        }
+    });
+});
 
 
 
