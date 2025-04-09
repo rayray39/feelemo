@@ -36,12 +36,11 @@ function JournalEntry({ cardIndex, entry }:{ cardIndex:number, entry:(string)[] 
             })
         })
 
+        const data = await response.json();
         if (!response.ok) {
-            const data = await response.json();
             console.log(data.error);
         }
 
-        const data = await response.json();
         console.log(data.message);
     }
     

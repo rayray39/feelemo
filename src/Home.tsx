@@ -4,6 +4,7 @@ import JournalEntries from "./JournalEntries";
 import { useEffect, useState } from "react";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
+// import Button from "@mui/material/Button";
 
 function Home() {
     // each journal entry is a list, and each attribute in the entry is either a number of string
@@ -119,6 +120,21 @@ function Home() {
     //     console.log(data.message);
     // }
 
+    // const resetFavs = async () => {
+    //     const response = await fetch('http://localhost:5000/reset-favourites', {
+    //         method:'POST',
+    //         headers:{'Content-Type':'application/json'},
+    //     })
+
+    //     if (!response.ok) {
+    //         console.log('Error resetting table.');
+    //         return;
+    //     }
+
+    //     const data = await response.json();
+    //     console.log(data.message);
+    // }
+
     return <Stack sx={{
         maxWidth:'50%',
         transform:'translateX(50%)',
@@ -155,6 +171,8 @@ function Home() {
         </BottomNavigation>
 
         <JournalEntries entries={bottomNavValue == 0 ? journalEntries : favourites} />
+
+        {/* <Button onClick={resetFavs}>reset favourites</Button> */}
 
         {/* <Button onClick={handleDelete}>delete entry</Button> */}
     </Stack>
