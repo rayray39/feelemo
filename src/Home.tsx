@@ -161,13 +161,13 @@ function Home() {
                 '&.Mui-selected': {
                 color: 'black',  // Change text color when selected (default is blue)
                 },
-            }} label="ALL" />
+            }} label="ALL📝" />
             <BottomNavigationAction onClick={getFavourites} sx={{
                 color:'black',
                 '&.Mui-selected': {
                 color: 'black',  // Change text color when selected (default is blue)
                 },
-            }} label="FAVS" />
+            }} label="FAVS♥️" />
         </BottomNavigation>
 
         <JournalEntries entries={bottomNavValue == 0 ? journalEntries : favourites} displayAll={bottomNavValue == 0} />
