@@ -170,7 +170,7 @@ function Home() {
             }} label="FAVS" />
         </BottomNavigation>
 
-        <JournalEntries entries={bottomNavValue == 0 ? journalEntries : favourites} />
+        <JournalEntries entries={bottomNavValue == 0 ? journalEntries : favourites} displayAll={bottomNavValue == 0} />
 
         {/* <Button onClick={resetFavs}>reset favourites</Button> */}
 
