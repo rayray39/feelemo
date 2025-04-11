@@ -6,7 +6,7 @@ import CardContent from "@mui/material/CardContent"
 import Typography from "@mui/material/Typography"
 import { useNavigate } from "react-router-dom"
 
-function JournalEntry({ cardIndex, entry }:{ cardIndex:number, entry:(string)[] }) {
+function JournalEntry({ cardIndex, entry, displayAll }:{ cardIndex:number, entry:(string)[], displayAll:Boolean }) {
     // entry[0] == content
     // entry[1] == username
     // entry[2] == date of creation
@@ -57,7 +57,7 @@ function JournalEntry({ cardIndex, entry }:{ cardIndex:number, entry:(string)[] 
                 </CardContent>
             </CardActionArea>
 
-            <Box sx={{
+            {displayAll && <Box sx={{
                 display:'flex',
                 justifyContent:'flex-end'
             }}>
@@ -65,7 +65,7 @@ function JournalEntry({ cardIndex, entry }:{ cardIndex:number, entry:(string)[] 
                     bgcolor:'mediumseagreen',
                     margin:'10px'
                 }} variant="contained" disableElevation onClick={addToFavs} >Add To Favs</Button>
-            </Box>
+            </Box>}
         </Card>
     </>
 }
