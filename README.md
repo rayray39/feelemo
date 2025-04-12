@@ -1,54 +1,32 @@
-# React + TypeScript + Vite
+# Feelemo
+Feelemo is a simple, open space where anyone can freely express their thoughts and emotions without needing to create an account.
+This lightweight journal platform is built for users who just want to write and connect. Whether it's jotting down how you're feeling, sharing a reflection, or reading what others have posted, this app makes it easy.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Key Features
+- Users can create journal entries instantly — no sign-up or login required.
+- See what others are writing and leave supportive or thoughtful comments on their entries.
+- Add your favorite journal entries to your personal favourites list for easy access later.
+- Show appreciation by liking comments you resonate with.
 
-Currently, two official plugins are available:
+# Installation
+Want to run this project on your local machine? Follow the steps below to get everything up and running.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Clone the repo
+1. `git clone https://github.com/rayray39/feelemo.git`
+2. `cd your-folder-name`
 
-## Expanding the ESLint configuration
+## Install dependencies
+1. run `npm install`
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Run
+1. start the backend by running `node src/server.cjs`
+2. open a new terminal and start the frontend by running `npm run dev`  
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+The app should now be running on:
+- Frontend: http://localhost:5173
+- Backend: http://localhost:5000
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+The database is stored in `./data/database.db` and should be created automatically.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+# Notes
+The project was built using react and typescript, using vite as the built tool. On the backend, RESTful APIs are written in expressJS and sqlite3 for database.  The project was meant as way to learn new things.
