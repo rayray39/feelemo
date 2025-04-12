@@ -1,4 +1,8 @@
 # Feelemo
+<p align="center">
+  <img src="./src/assets/feelemo.jpg" width='65%'/>
+</p>
+
 Feelemo is a simple, open space where anyone can freely express their thoughts and emotions without needing to create an account.
 This lightweight journal platform is built for users who just want to write and connect. Whether it's jotting down how you're feeling, sharing a reflection, or reading what others have posted, this app makes it easy.
 
